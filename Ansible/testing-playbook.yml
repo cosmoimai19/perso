@@ -1,0 +1,53 @@
+---
+- hosts: all
+  tasks:
+#    - name: installation vim
+#      apt: name=vim state=present
+#    - name: installation git
+#      apt: name=git state=present
+#    - name: installation curl
+#      apt: name=curl state=present
+#    - name: installation tmux
+#      apt: name=tmux state=present
+
+      - name: base install
+        apt: name={{item}} state=present update_cache=yes
+        with_items: # with_items permet de specifier les item de
+        # {{item}} pour apt, donc plus besoin de detailler sur
+        # plusieurs lignes.
+          - vim
+          - htop 
+          - ssh
+          - curl 
+          - git 
+          - net-tools
+          - nmap 
+          - ncdu 
+          - iptables-persistent
+          - bash-completion
+          - unzip 
+
+# inventory 
+# host1.example.com
+# 192.168.1.1
+
+# specifier port sshd non standard : host.example.tld:port
+# utiliser un intervale quand plusieurs machines possedent le meme
+# nom : host[1:3].example.tld 
+# > host1.example.tld
+# > host2.example.tld 
+
+# Ansible supporte [a:z] & [01:03] l'utilisation de 0,
+# mais ne supporte pas [aa:dz] il faut donc utiliser
+# [a:d][a:z].example.tld
+
+# possibilité d'utiliser step 
+# host[min:max:step].example.tld
+# exemple : host[1:6:2].ex.tld
+# > host1. host3. host5
+# l'option step permet de spécifier un pas 
+# on passe de 1 à 3 à 5 soit 1 + 2
+
+# specifier quel inventaire utiliser :
+# ansible-playbook -i <inventory> /dir/playbook.yml
+
